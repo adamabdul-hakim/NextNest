@@ -1,5 +1,6 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import './App.css';
 
 function InputForm() {
   const [name, setName] = useState("");
@@ -13,6 +14,7 @@ function InputForm() {
 
   return (
     <>
+    <Outlet/>
       <form onSubmit={handleSubmit} className="signin-container">
         <h1>Input Form</h1>
 
