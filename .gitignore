@@ -9,4 +9,4 @@ dist/
 .DS_Store
 Thumbs.db
 frontend/node_modules/
-frontend/dist/
+frontend/dist/package-lock.json
