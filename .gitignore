@@ -10,3 +10,4 @@ dist/
 Thumbs.db
 frontend/node_modules/
 frontend/dist/package-lock.json
+frontend/backend/.env
