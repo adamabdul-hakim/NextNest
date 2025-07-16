@@ -6,6 +6,8 @@ function InputForm() {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [fieldOfInterest, setFieldOfInterest] = useState("");
+  const[city, setCity] = useState("");
+  const [dateOfTravel, setDateOfTravel] = useState("")
   
   const handleSubmit = (e) => {
     e.preventDefault(); 
@@ -35,6 +37,18 @@ function InputForm() {
         onChange={(e)=> setFieldOfInterest(e.target.value)} 
         placeholder="Field of Interest"
         type="text"
+        />
+        <input 
+        value={city}
+        onChange={(e)=> setCity(e.target.value)} 
+        placeholder="City"
+        type="text"
+        />
+        <input
+        value={dateOfTravel}
+        onChange={(e)=> setDateOfTravel(e.target.value)}
+        placeholder="City"
+        type="date"
         />
         <button type="submit">
           Submit

@@ -21,7 +21,7 @@ lon = geo_data[0]['lon']
 #WEATHER_API_KEY_URL = "https://api.openweathermap.org/data/2.5/weather"
 WEATHER_API_KEY_URL = "https://api.openweathermap.org/data/3.0/onecall"
 
-def get_movie_details():
+def get_weather_details():
     params = {
         'appid': WEATHER_API_KEY,
         "limit": 1,
