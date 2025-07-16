@@ -1,6 +1,3 @@
-
-# tmdb_api.py - TMDB API
-
 import requests
 from dotenv import load_dotenv
 import os
@@ -41,6 +38,6 @@ def get_weather_details():
             temp = day['temp']['day']
             print(f"{dt}: {description}, {temp}°F")
     else:
-        return {'error': 'Movie not found on TMDB.'}
+        return {'error': 'Weather info not found.'}
 
-print(get_movie_details())
+# print(get_movie_details())
