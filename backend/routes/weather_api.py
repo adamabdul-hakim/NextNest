@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> d236a56aca1d03a8d38d03d3d019cc37d66f4b02
 import requests
 from dotenv import load_dotenv
 import os
@@ -39,6 +42,6 @@ def get_weather_details():
             temp = day['temp']['day']
             print(f"{dt}: {description}, {temp}°F")
     else:
-        return {'error': 'Movie not found on TMDB.'}
+        return {'error': 'Weather info not found.'}
 
-print(get_movie_details())
+# print(get_movie_details())
