@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import './App.css';
+import axios from "axios";
 
 function InputForm() {
   const [name, setName] = useState("");
@@ -8,10 +9,29 @@ function InputForm() {
   const [fieldOfInterest, setFieldOfInterest] = useState("");
   const[city, setCity] = useState("");
   const [dateOfTravel, setDateOfTravel] = useState("")
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
   
-  const handleSubmit = (e) => {
-    e.preventDefault(); 
-    console.log('Submitted'); 
+    const formData = {
+      name,
+      age,
+      fieldOfInterest,
+      city,
+      dateOfTravel,
+    };
+  
+    try {
+      const res = await axios.post(`http://localhost:5001/get_weather/${city}`, formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      console.log("✅ Response from backend:", res.data);
+    } catch (error) {
+      console.error("🚫 Error submitting form:", error);
+    }
   };
 
   return (
