@@ -1,47 +1,44 @@
-<<<<<<< HEAD
+# weather_api.py
 
-=======
->>>>>>> d236a56aca1d03a8d38d03d3d019cc37d66f4b02
 import requests
-from dotenv import load_dotenv
 import os
-from gemini_api import get_lat_lon
+from dotenv import load_dotenv
+from datetime import datetime
 
 load_dotenv()
-city = input("Where are you flying to? ")
 WEATHER_API_KEY = os.environ['WEATHER_API_KEY']
-
-
-geo_url = f"http://api.openweathermap.org/geo/1.0/direct?q={city}&limit=1&appid={WEATHER_API_KEY}"
-geo_data = requests.get(geo_url).json()
-
-lat = geo_data[0]['lat']
-lon = geo_data[0]['lon']
-
-
-#WEATHER_API_KEY_URL = "https://api.openweathermap.org/data/2.5/weather"
 WEATHER_API_KEY_URL = "https://api.openweathermap.org/data/3.0/onecall"
 
-def get_weather_details():
+def get_lat_lon(city):
+    geo_url = f"http://api.openweathermap.org/geo/1.0/direct?q={city}&limit=1&appid={WEATHER_API_KEY}"
+    geo_data = requests.get(geo_url).json()
+
+    if not geo_data:
+        return None, None
+    return geo_data[0]['lat'], geo_data[0]['lon']
+
+def get_weather_forecast(lat, lon):
     params = {
         'appid': WEATHER_API_KEY,
-        "limit": 1,
-        "lat": lat,
-        "lon": lon,
-        "units": "imperial"
+        'lat': lat,
+        'lon': lon,
+        'units': 'imperial',
+        'exclude': 'minutely,hourly,alerts,current'
     }
 
     response = requests.get(WEATHER_API_KEY_URL, params=params)
+    if response.status_code != 200:
+        return None
 
-    if response.status_code == 200 and response.json():
-        data = response.json()
-        for day in data['daily']:
-            from datetime import datetime
-            dt = datetime.utcfromtimestamp(day['dt']).strftime('%Y-%m-%d')
-            description = day['weather'][0]['description']
-            temp = day['temp']['day']
-            print(f"{dt}: {description}, {temp}°F")
-    else:
-        return {'error': 'Weather info not found.'}
+    forecast = []
+    for day in response.json().get('daily', []):
+        dt = datetime.utcfromtimestamp(day['dt']).strftime('%Y-%m-%d')
+        description = day['weather'][0]['description']
+        temp = day['temp']['day']
+        forecast.append({
+            "date": dt,
+            "description": description,
+            "temperature": f"{temp}°F"
+        })
 
-# print(get_movie_details())
+    return forecast
