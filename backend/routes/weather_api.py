@@ -1,6 +1,4 @@
 
-# tmdb_api.py - TMDB API
-
 import requests
 from dotenv import load_dotenv
 import os
