@@ -38,6 +38,7 @@ NextNest/
 ### Prerequisites
 
 - Python 3
+- Download Nodejs
 - API keys for Amadeus, Adzuna, Gemini
 
 Create a `.env` file in `backend/` with:
