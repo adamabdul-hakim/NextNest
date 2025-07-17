@@ -1,15 +1,17 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchFlights, fetchJobs, fetchCitySummary } from "../services/api";
 
 export default function Results() {
   const { state } = useLocation();
+  const navigate = useNavigate();
   const { originCity, destinationCity, date, field } = state || {};
 
   const [flight, setFlight] = useState(null);
   const [jobs, setJobs] = useState([]);
   const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     async function loadData() {
@@ -33,6 +35,29 @@ export default function Results() {
       loadData();
     }
   }, [originCity, destinationCity, date, field]);
+
+  const handleSave = async () => {
+    try {
+      await fetch("http://127.0.0.1:5001/api/history", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          origin_city: originCity,
+          destination_city: destinationCity,
+          role: field,
+          travel_date: date,
+        }),
+      });
+      setSaved(true);
+    } catch (err) {
+      console.error("Error saving history:", err);
+      alert("Could not save to history.");
+    }
+  };
+
+  const handleViewHistory = () => {
+    navigate("/history");
+  };
 
   if (loading) {
     return (
@@ -86,6 +111,13 @@ export default function Results() {
           </ul>
         </section>
       )}
+
+      <div className="results-actions">
+        <button onClick={handleSave} disabled={saved}>
+          {saved ? "Saved!" : "Save Results"}
+        </button>
+        <button onClick={handleViewHistory}>View History</button>
+      </div>
     </div>
   );
 }

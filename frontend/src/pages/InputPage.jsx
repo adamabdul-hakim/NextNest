@@ -17,17 +17,6 @@ export default function InputPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await fetch("http://127.0.0.1:5001/api/history", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        origin_city: formData.originCity,
-        destination_city: formData.destinationCity,
-        role: formData.role,
-        travel_date: formData.date,
-      }),
-    });
-
     navigate("/results", {
       state: {
         originCity: formData.originCity,
