@@ -34,31 +34,31 @@ export default function History() {
       {history.length === 0 ? (
         <p className="empty">No history yet.</p>
       ) : (
-        <>
-          <ul className="history-list">
-            {history.map((item, idx) => (
-              <li key={idx} className="history-item">
-                <div>
-                  <strong>{item.origin_city}</strong> ➡️{" "}
-                  <strong>{item.destination_city}</strong>
-                </div>
-                <div>
-                  {item.role && <span>Role: {item.role}</span>}
-                  {item.travel_date && <span> | Date: {item.travel_date}</span>}
-                </div>
-              </li>
-            ))}
-          </ul>
-          <div className="history-actions">
-            <button className="clear-btn" onClick={handleClearHistory}>
-              Clear History
-            </button>
-            <button className="home-btn" onClick={handleGoHome}>
-              Home
-            </button>
-          </div>
-        </>
+        <ul className="history-list">
+          {history.map((item, idx) => (
+            <li key={idx} className="history-item">
+              <div>
+                <strong>{item.origin_city}</strong> ➡️{" "}
+                <strong>{item.destination_city}</strong>
+              </div>
+              <div>
+                {item.role && <span>Role: {item.role}</span>}
+                {item.travel_date && <span> | Date: {item.travel_date}</span>}
+              </div>
+            </li>
+          ))}
+        </ul>
       )}
+
+      {/* ✅ Buttons are now ALWAYS visible */}
+      <div className="history-actions">
+        <button className="clear-btn" onClick={handleClearHistory}>
+          🗑️ Clear History
+        </button>
+        <button className="home-btn" onClick={handleGoHome}>
+          🏠 Home
+        </button>
+      </div>
     </div>
   );
 }
