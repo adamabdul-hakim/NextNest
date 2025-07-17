@@ -25,14 +25,21 @@ def search_flights(origin, destination, date):
         "destinationLocationCode": destination,
         "departureDate": date,
         "adults": 1,
-        "max": 5
+        "max": 20  # get enough offers to compare
     }
     headers = {"Authorization": f"Bearer {token}"}
     response = requests.get(url, params=params, headers=headers)
     response.raise_for_status()
+
     offers = []
     for offer in response.json().get("data", []):
-        price = offer["price"]["total"]
+        price = float(offer["price"]["total"])
         airline = offer["itineraries"][0]["segments"][0]["carrierCode"]
         offers.append({"airline": airline, "price": price})
-    return offers
+
+    if not offers:
+        return {"message": "No flights found"}
+
+    # find the cheapest
+    cheapest = min(offers, key=lambda x: x["price"])
+    return cheapest
