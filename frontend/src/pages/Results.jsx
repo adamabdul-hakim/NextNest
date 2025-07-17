@@ -59,6 +59,10 @@ export default function Results() {
     navigate("/history");
   };
 
+  const handleSearchAgain = () => {
+    navigate("/input");
+  };
+
   if (loading) {
     return (
       <div className="loading-container">
@@ -117,6 +121,7 @@ export default function Results() {
           {saved ? "Saved!" : "Save Results"}
         </button>
         <button onClick={handleViewHistory}>View History</button>
+        <button onClick={handleSearchAgain}>Search Again</button>
       </div>
     </div>
   );

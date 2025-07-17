@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function History() {
   const [history, setHistory] = useState([]);
+  const navigate = useNavigate();
 
   const fetchHistory = async () => {
     const res = await fetch("http://127.0.0.1:5001/api/history");
@@ -15,6 +17,10 @@ export default function History() {
       method: "DELETE",
     });
     setHistory([]);
+  };
+
+  const handleGoHome = () => {
+    navigate("/");
   };
 
   useEffect(() => {
@@ -43,9 +49,14 @@ export default function History() {
               </li>
             ))}
           </ul>
-          <button className="clear-btn" onClick={handleClearHistory}>
-            Clear History
-          </button>
+          <div className="history-actions">
+            <button className="clear-btn" onClick={handleClearHistory}>
+              Clear History
+            </button>
+            <button className="home-btn" onClick={handleGoHome}>
+              Home
+            </button>
+          </div>
         </>
       )}
     </div>
