@@ -39,6 +39,7 @@ NextNest/
 
 - Python 3
 - Download Nodejs
+- Install the Google GenAI SDK
 - API keys for Amadeus, Adzuna, Gemini
 
 Create a `.env` file in `backend/` with:
