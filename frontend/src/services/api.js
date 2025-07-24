@@ -1,4 +1,5 @@
-const BASE_URL = "https://nextnest-uhe7.onrender.com";
+// const BASE_URL = "https://nextnest-uhe7.onrender.com";
+const BASE_URL = "http://localhost:5001";
 
 export async function fetchFlights(originCity, destinationCity, date) {
   const res = await fetch(
