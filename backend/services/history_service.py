@@ -1,36 +1,34 @@
-import sqlite3
+import os
+from dotenv import load_dotenv
+from supabase import create_client, Client
 
-DB_NAME = "search_history.db"
+load_dotenv()
 
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+
+# Validate env variables
+if not SUPABASE_URL or not SUPABASE_KEY:
+    raise RuntimeError("Supabase URL or Key not set in .env")
+
+# Initialize Supabase client
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+# --- Services ---
 def save_search(origin_city, destination_city, role, travel_date):
-    conn = sqlite3.connect(DB_NAME)
-    c = conn.cursor()
-    c.execute(
-        "INSERT INTO history (origin_city, destination_city, role, travel_date) VALUES (?, ?, ?, ?)",
-        (origin_city, destination_city, role, travel_date)
-    )
-    conn.commit()
-    conn.close()
+    data = {
+        "origin_city": origin_city,
+        "destination_city": destination_city,  # match your Supabase column name
+        "role": role,
+        "travel_date": travel_date
+    }
+    # execute() will raise an exception if something is wrong
+    supabase.table("history").insert(data).execute()
 
 def get_history():
-    conn = sqlite3.connect(DB_NAME)
-    c = conn.cursor()
-    c.execute("SELECT origin_city, destination_city, role, travel_date FROM history ORDER BY id DESC")
-    rows = c.fetchall()
-    conn.close()
-    history = []
-    for row in rows:
-        history.append({
-            "origin_city": row[0],
-            "destination_city": row[1],
-            "role": row[2],
-            "travel_date": row[3]
-        })
-    return history
+    response = supabase.table("history").select("*").order("id", desc=True).execute()
+    return response.data
+
 
 def clear_history():
-    conn = sqlite3.connect(DB_NAME)
-    c = conn.cursor()
-    c.execute("DELETE FROM history")
-    conn.commit()
-    conn.close()
+    supabase.table("history").delete().neq("id", 0).execute()
