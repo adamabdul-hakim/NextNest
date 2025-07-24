@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../styles/history.css";
 
 export default function History() {
   const [history, setHistory] = useState([]);

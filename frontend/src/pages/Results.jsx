@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchFlights, fetchJobs, fetchCitySummary } from "../services/api";
+import "../styles/results.css";
 
 export default function Results() {
   const { state } = useLocation();

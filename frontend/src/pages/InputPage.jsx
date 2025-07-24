@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
+import "../styles/inputpage.css";
 
 export default function InputPage() {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ export default function InputPage() {
 
   return (
     <div className="input-container">
-      <Outlet/>
+      <Outlet />
       <h1>Tell us about your move</h1>
       <form onSubmit={handleSubmit} className="input-form">
         <div>
