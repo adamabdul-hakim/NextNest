@@ -39,6 +39,7 @@ NextNest/
 
 - Python 3
 - Download Nodejs
+- run `pip install -q -U google-genai` to install the Google GenAI SDK 
 - API keys for Amadeus, Adzuna, Gemini
 
 Create a `.env` file in `backend/` with:
@@ -57,7 +58,7 @@ GEMINI_API_KEY=your_gemini_key
 ```bash
 cd backend
 pip install -r requirements.txt
-python db_setup.py
+python database.py
 python app.py
 ```
 Backend runs on: http://127.0.0.1:5001
