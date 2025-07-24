@@ -1,62 +1,82 @@
 import { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 
 const SignUp = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-    const {session, signUpNewUser} = UserAuth()
-    const navigate = useNavigate()
+  const { session, signUpNewUser } = UserAuth();
+  const navigate = useNavigate();
 
-    const handleSignUp = async (e) =>
-    {
-        e.preventDefault()
-        setLoading(true)
-        try {
-            const result = await signUpNewUser(email, password)
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
-            if(result.success) {
-                navigate("/")
-            }
-
-        }
-        catch (err){
-            setError("an error occurred")
-        }
-        finally{
-            setLoading(false)
-        }
+    // Optional client-side validation
+    if (!email || !password) {
+      setError("Please enter both email and password.");
+      setLoading(false);
+      return;
     }
 
-    return (
-        <div>
-            <form onSubmit={handleSignUp} className="signup-container">
-                <h1>Eco Hub</h1>
-                <h2> Sign up today!</h2>
-                <p>
-                   Already have an account? <Link to={"/signin"} className="signup-link">Sign in!</Link>
-                </p>
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      setLoading(false);
+      return;
+    }
 
-                <input 
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email" 
-                type="email" 
-                />
-                <input 
-                onChange={(e)=> setPassword(e.target.value)} 
-                placeholder="Password"
-                type="password"
-                />
-                <button type="submit" disabled={loading}>
-                  Sign up
-                </button>
-                {error && <p>{error}</p>}
-            </form>
-        </div>
-    )
-}
+    try {
+      const result = await signUpNewUser(email.trim(), password);
+
+      if (result.success) {
+        navigate("/");
+      } else {
+        setError(result.error.message || "Sign-up failed.");
+      }
+    } catch (err) {
+      console.error("Unexpected error during sign-up:", err);
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSignUp} className="signup-container">
+        <h1>Eco Hub</h1>
+        <h2>Sign up today!</h2>
+        <p>
+          Already have an account?{" "}
+          <Link to="/signin" className="signup-link">
+            Sign in!
+          </Link>
+        </p>
+
+        <input
+          type="email"
+          placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+        />
+        <button type="submit" disabled={loading}>
+          {loading ? "Signing up..." : "Sign up"}
+        </button>
+
+        {error && <p className="error-message">{error}</p>}
+      </form>
+    </div>
+  );
+};
 
 export default SignUp;
