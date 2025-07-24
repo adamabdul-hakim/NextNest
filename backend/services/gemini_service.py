@@ -47,6 +47,7 @@ def get_city_summary(city_name: str) -> dict:
 
     raw_text = response.text.strip()
 
+
     # Remove markdown code fences if present
     if raw_text.startswith("```"):
         raw_text = raw_text.strip("`")  # remove backticks
@@ -64,3 +65,19 @@ def get_city_summary(city_name: str) -> dict:
         data = {"average_temp": None, "summary": raw_text}
 
     return data
+
+def get_airline_name(iata_code: str) -> str:
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        config=types.GenerateContentConfig(
+            system_instruction=(
+                "You are an assistant that returns the full name of an airline given its IATA code. "
+                "Respond only with the airline name, with no extra text. "
+                "If the code is unknown or invalid, say 'Unknown airline'."
+            )
+        ),
+        contents=iata_code,
+    )
+
+    name = response.text.strip()
+    return name

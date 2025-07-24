@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from services.amadeus_service import search_flights
-from services.gemini_service import get_airport_code
+from services.gemini_service import get_airport_code, get_airline_name
 
 flights_bp = Blueprint('flights', __name__)
 
@@ -21,6 +21,18 @@ def flights():
             return jsonify({"error": "Could not resolve airport codes"}), 400
 
         cheapest = search_flights(origin_code, destination_code, date)
-        return jsonify(cheapest)
+        
+        airline_code = cheapest.get("airlineCode")
+        airline_name = get_airline_name(airline_code) if airline_code else "Unknown airline"
+
+        result = {
+            "airline": airline_name,
+            "airlineCode": airline_code,
+            "price": cheapest.get("price"),
+            "departureTime": cheapest.get("departureTime"),
+            "arrivalTime": cheapest.get("arrivalTime"),
+        }
+
+        return jsonify(result)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
