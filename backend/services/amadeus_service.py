@@ -1,4 +1,5 @@
-import os, requests
+import os
+import requests
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -25,21 +26,28 @@ def search_flights(origin, destination, date):
         "destinationLocationCode": destination,
         "departureDate": date,
         "adults": 1,
-        "max": 20  # get enough offers to compare
+        "max": 20
     }
     headers = {"Authorization": f"Bearer {token}"}
     response = requests.get(url, params=params, headers=headers)
     response.raise_for_status()
 
+    data = response.json()
+    carriers_map = data.get("dictionaries", {}).get("carriers", {})
+
     offers = []
-    for offer in response.json().get("data", []):
+    for offer in data.get("data", []):
         price = float(offer["price"]["total"])
-        airline = offer["itineraries"][0]["segments"][0]["carrierCode"]
-        offers.append({"airline": airline, "price": price})
+        carrier_code = offer["itineraries"][0]["segments"][0].get("carrierCode")
+        airline_name = carriers_map.get(carrier_code, "Unknown airline")
+        offers.append({
+            "airlineCode": carrier_code,
+            "airline": airline_name,
+            "price": price
+        })
 
     if not offers:
         return {"message": "No flights found"}
 
-    # find the cheapest
     cheapest = min(offers, key=lambda x: x["price"])
     return cheapest

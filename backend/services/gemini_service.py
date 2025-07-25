@@ -71,10 +71,12 @@ def get_airline_name(iata_code: str) -> str:
         model="gemini-2.5-flash",
         config=types.GenerateContentConfig(
             system_instruction=(
-                "You are an assistant that returns the full name of an airline given its IATA code. "
-                "Respond only with the airline name, with no extra text. "
-                "If the code is unknown or invalid, say 'Unknown airline'."
-            )
+                "Given a valid 2-letter IATA airline code (e.g., 'AA', 'DL'), "
+                "respond ONLY with the airline's full name (e.g., 'American Airlines'). "
+                "If the input is not a valid known IATA airline code, respond with exactly 'Unknown airline'. "
+                "Do not include punctuation, explanations, or extra words."
+)
+
         ),
         contents=iata_code,
     )
