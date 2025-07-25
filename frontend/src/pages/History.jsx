@@ -2,21 +2,32 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/history.css";
 import { BASE_URL } from "../config";
+import { UserAuth } from "../context/AuthContext";
 
 export default function History() {
+  const { session } = UserAuth();
   const [history, setHistory] = useState([]);
   const navigate = useNavigate();
 
   const fetchHistory = async () => {
-    const res = await fetch(`${BASE_URL}/api/history`);
+    if (!session) return;
+    const res = await fetch(`${BASE_URL}/api/history`, {
+      headers: {
+        Authorization: `Bearer ${session.access_token}`,
+      },
+    });
     const data = await res.json();
     setHistory(data);
   };
 
   const handleClearHistory = async () => {
     if (!window.confirm("Are you sure you want to clear all history?")) return;
+    if (!session) return;
     await fetch(`${BASE_URL}/api/history/clear`, {
       method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${session.access_token}`,
+      },
     });
     setHistory([]);
   };
@@ -27,7 +38,7 @@ export default function History() {
 
   useEffect(() => {
     fetchHistory();
-  }, []);
+  }, [session]); // re-fetch when session changes
 
   return (
     <div className="history-container">

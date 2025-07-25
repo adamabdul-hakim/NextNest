@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { fetchFlights, fetchJobs, fetchCitySummary } from "../services/api";
 import "../styles/results.css";
 import { BASE_URL } from "../config";
-import { UserAuth } from "../context/AuthContext"; // ✅ import auth context
+import { UserAuth } from "../context/AuthContext";
 
 export default function Results() {
-  const { session, guest } = UserAuth(); // ✅ get session and guest state
+  const { session, guest } = UserAuth();
   const { state } = useLocation();
   const navigate = useNavigate();
   const { originCity, destinationCity, date, field } = state || {};
@@ -50,7 +50,10 @@ export default function Results() {
     try {
       await fetch(`${BASE_URL}/api/history`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session.access_token}`,
+        },
         body: JSON.stringify({
           origin_city: originCity,
           destination_city: destinationCity,
