@@ -9,17 +9,6 @@ export default function History() {
   const [history, setHistory] = useState([]);
   const navigate = useNavigate();
 
-  const fetchHistory = async () => {
-    if (!session) return;
-    const res = await fetch(`${BASE_URL}/api/history`, {
-      headers: {
-        Authorization: `Bearer ${session.access_token}`,
-      },
-    });
-    const data = await res.json();
-    setHistory(data);
-  };
-
   const handleClearHistory = async () => {
     if (!window.confirm("Are you sure you want to clear all history?")) return;
     if (!session) return;
@@ -37,8 +26,22 @@ export default function History() {
   };
 
   useEffect(() => {
-    fetchHistory();
-  }, [session]); // re-fetch when session changes
+    const getHistory = async () => {
+      if (!session) return;
+      try {
+        const res = await fetch(`${BASE_URL}/api/history`, {
+          headers: {
+            Authorization: `Bearer ${session.access_token}`,
+          },
+        });
+        const data = await res.json();
+        setHistory(data);
+      } catch (err) {
+        console.error("Error fetching history:", err);
+      }
+    };
+    getHistory();
+  }, [session]);
 
   return (
     <div className="history-container">
