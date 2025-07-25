@@ -51,13 +51,12 @@ export default function History() {
         </ul>
       )}
 
-      {/* ✅ Buttons are now ALWAYS visible */}
       <div className="history-actions">
         <button className="clear-btn" onClick={handleClearHistory}>
-          🗑️ Clear History
+          Clear History
         </button>
         <button className="home-btn" onClick={handleGoHome}>
-          🏠 Home
+          Home
         </button>
       </div>
     </div>
