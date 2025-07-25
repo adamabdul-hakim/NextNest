@@ -15,20 +15,25 @@ if not SUPABASE_URL or not SUPABASE_KEY:
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 # --- Services ---
-def save_search(origin_city, destination_city, role, travel_date):
+def save_search(origin_city, destination_city, role, travel_date, user_id):
     data = {
         "origin_city": origin_city,
-        "destination_city": destination_city,  # match your Supabase column name
+        "destination_city": destination_city,
         "role": role,
-        "travel_date": travel_date
+        "travel_date": travel_date,
+        "user_id": user_id  # ✅ associate record with a user
     }
-    # execute() will raise an exception if something is wrong
     supabase.table("history").insert(data).execute()
 
-def get_history():
-    response = supabase.table("history").select("*").order("id", desc=True).execute()
+def get_history(user_id):
+    response = (
+        supabase.table("history")
+        .select("*")
+        .eq("user_id", user_id)          # ✅ only fetch this user's history
+        .order("id", desc=True)
+        .execute()
+    )
     return response.data
 
-
-def clear_history():
-    supabase.table("history").delete().neq("id", 0).execute()
+def clear_history(user_id):
+    supabase.table("history").delete().eq("user_id", user_id).execute()  # ✅ only delete this user's history
