@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 
 const SignIn = () => {
@@ -8,29 +8,35 @@ const SignIn = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { session, signInUser } = UserAuth();
+  const { signInUser, signInAsGuest } = UserAuth(); // ✅ include signInAsGuest
   const navigate = useNavigate();
+
   const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       const result = await signInUser(email, password);
-
       if (result.success) {
-        navigate("/");
+        navigate("/input");
       }
-    } catch (err) {
-      setError("an error occurred");
+    } catch {
+      setError("An error occurred");
     } finally {
       setLoading(false);
     }
+  };
+
+  // ✅ handle guest
+  const handleGuest = () => {
+    signInAsGuest();
+    navigate("/"); // go to home or input page
   };
 
   return (
     <div>
       <form onSubmit={handleSignIn} className="signin-container">
         <h1>Eco Hub</h1>
-        <h2> Sign in today!</h2>
+        <h2>Sign in today!</h2>
         <p>
           Don't have an account?{" "}
           <Link to={"/signup"} className="signup-link">
@@ -52,6 +58,15 @@ const SignIn = () => {
           Sign in
         </button>
         {error && <p>{error}</p>}
+
+        {/* ✅ Continue as guest */}
+        <button
+          type="button"
+          onClick={handleGuest}
+          style={{ marginTop: "1rem" }}
+        >
+          Continue as Guest
+        </button>
       </form>
     </div>
   );

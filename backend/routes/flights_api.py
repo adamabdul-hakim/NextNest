@@ -23,10 +23,7 @@ def flights():
         cheapest = search_flights(origin_code, destination_code, date)
 
         airline_code = cheapest.get("airlineCode")
-        airline_name = cheapest.get("airline")  # now directly from search_flights
-
-        print("DEBUG airlineCode from cheapest:", airline_code)
-        print("DEBUG airline name:", airline_name)
+        airline_name = cheapest.get("airline")
 
         result = {
             "airline": airline_name,

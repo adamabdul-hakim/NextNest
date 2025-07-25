@@ -2,13 +2,17 @@ import { UserAuth } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ children }) => {
-  const { session } = UserAuth();
+  const { session, guest } = UserAuth();
 
   if (session === undefined) {
-    return <div></div>;
+    return null;
   }
 
-  return <>{session ? <>{children}</> : <Navigate to="/signin" />}</>;
+  if (session || guest) {
+    return <>{children}</>;
+  }
+
+  return <Navigate to="/signin" />;
 };
 
 export default PrivateRoute;

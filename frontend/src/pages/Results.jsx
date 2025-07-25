@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { fetchFlights, fetchJobs, fetchCitySummary } from "../services/api";
 import "../styles/results.css";
 import { BASE_URL } from "../config";
+import { UserAuth } from "../context/AuthContext"; // ✅ import auth context
 
 export default function Results() {
+  const { session, guest } = UserAuth(); // ✅ get session and guest state
   const { state } = useLocation();
   const navigate = useNavigate();
   const { originCity, destinationCity, date, field } = state || {};
@@ -39,6 +41,12 @@ export default function Results() {
   }, [originCity, destinationCity, date, field]);
 
   const handleSave = async () => {
+    // ✅ block guests and non-signed-in users
+    if (!session || guest) {
+      alert("Sign in to save your history.");
+      return;
+    }
+
     try {
       await fetch(`${BASE_URL}/api/history`, {
         method: "POST",
@@ -58,6 +66,11 @@ export default function Results() {
   };
 
   const handleViewHistory = () => {
+    // ✅ block guests from viewing history
+    if (!session || guest) {
+      alert("Sign in to view your history.");
+      return;
+    }
     navigate("/history");
   };
 
