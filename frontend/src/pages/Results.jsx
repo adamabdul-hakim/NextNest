@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchFlights, fetchJobs, fetchCitySummary } from "../services/api";
 import "../styles/results.css";
+import { BASE_URL } from "../config";
 
 export default function Results() {
   const { state } = useLocation();
@@ -39,7 +40,7 @@ export default function Results() {
 
   const handleSave = async () => {
     try {
-      await fetch("http://127.0.0.1:5001/api/history", {
+      await fetch(`${BASE_URL}/api/history`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
