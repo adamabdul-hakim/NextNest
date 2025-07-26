@@ -41,9 +41,6 @@ export default function Results() {
   }, [originCity, destinationCity, date, field]);
 
   const handleSave = async () => {
-    // console.log("Session before save:", session);
-
-    // block guests and non-signed-in users
     if (!session || guest) {
       alert("Sign in to save your history.");
       return;
@@ -71,7 +68,6 @@ export default function Results() {
   };
 
   const handleViewHistory = () => {
-    // ✅ block guests from viewing history
     if (!session || guest) {
       alert("Sign in to view your history.");
       return;
@@ -105,6 +101,19 @@ export default function Results() {
           <p>
             <strong>Price:</strong> ${flight.price}
           </p>
+          {/* ✅ Book Flight Link */}
+          <a
+            href={`https://www.google.com/flights?hl=en#flt=${encodeURIComponent(
+              originCity
+            )}.${encodeURIComponent(destinationCity)}.${encodeURIComponent(
+              date
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="book-link"
+          >
+            Book This Flight
+          </a>
         </section>
       )}
 
