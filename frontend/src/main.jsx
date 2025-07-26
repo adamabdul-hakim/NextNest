@@ -13,6 +13,7 @@ import SignIn from "./components/SignIn.jsx";
 import SignUp from "./components/Signup.jsx";
 import { AuthContextProvider } from "./context/AuthContext.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
+import Dashboard from "./pages/Dashboard";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -29,7 +30,14 @@ createRoot(document.getElementById("root")).render(
           >
             <Route index={true} element={<Header />} />
           </Route>
-
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/input"
             element={

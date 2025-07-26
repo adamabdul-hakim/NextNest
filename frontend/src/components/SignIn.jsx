@@ -17,7 +17,7 @@ const SignIn = () => {
     try {
       const result = await signInUser(email, password);
       if (result.success) {
-        navigate("/input");
+        navigate("/dashboard");
       }
     } catch {
       setError("An error occurred");
@@ -29,7 +29,7 @@ const SignIn = () => {
   // ✅ handle guest
   const handleGuest = () => {
     signInAsGuest();
-    navigate("/"); // go to home or input page
+    navigate("/dashboard");
   };
 
   return (
