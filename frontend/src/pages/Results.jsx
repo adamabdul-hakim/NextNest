@@ -41,7 +41,9 @@ export default function Results() {
   }, [originCity, destinationCity, date, field]);
 
   const handleSave = async () => {
-    // ✅ block guests and non-signed-in users
+    console.log("Session before save:", session);
+
+    // block guests and non-signed-in users
     if (!session || guest) {
       alert("Sign in to save your history.");
       return;
