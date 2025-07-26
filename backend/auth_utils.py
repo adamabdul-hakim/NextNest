@@ -14,7 +14,14 @@ def verify_request():
 
     try:
         # Decode and verify JWT with Supabase JWT secret
-        payload = jwt.decode(token, SUPABASE_JWT_SECRET, algorithms=["HS256"])
+        payload = jwt.decode(
+            token,
+            SUPABASE_JWT_SECRET,
+            algorithms=["HS256"],
+            options={"verify_aud": False}
+        )
         return payload, None, None
-    except jwt.InvalidTokenError:
+    except jwt.InvalidTokenError as e:
+        print("JWT decode error:", e)
         return None, jsonify({"error": "Invalid token"}), 401
+
