@@ -13,12 +13,15 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   // Sign up
-  const signUpNewUser = async (email, password) => {
-    console.log("Attempting sign-up with:", email, password);
+  const signUpNewUser = async (email, password, username) => {
+    console.log("Attempting sign-up with:", email, username);
 
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        data: { username },
+      },
     });
 
     if (error) {

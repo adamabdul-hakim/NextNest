@@ -22,6 +22,6 @@ def verify_request():
         )
         return payload, None, None
     except jwt.InvalidTokenError as e:
-        print("JWT decode error:", e)
+        # print("JWT decode error:", e)
         return None, jsonify({"error": "Invalid token"}), 401
 

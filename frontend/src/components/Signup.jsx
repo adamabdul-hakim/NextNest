@@ -4,11 +4,12 @@ import { UserAuth } from "../context/AuthContext";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { session, signUpNewUser } = UserAuth();
+  const { signUpNewUser } = UserAuth();
   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
@@ -16,9 +17,9 @@ const SignUp = () => {
     setError("");
     setLoading(true);
 
-    // Optional client-side validation
-    if (!email || !password) {
-      setError("Please enter both email and password.");
+    // Simple validation
+    if (!email || !password || !username) {
+      setError("Please enter email, username, and password.");
       setLoading(false);
       return;
     }
@@ -30,10 +31,13 @@ const SignUp = () => {
     }
 
     try {
-      const result = await signUpNewUser(email.trim(), password);
-
+      const result = await signUpNewUser(
+        email.trim(),
+        password,
+        username.trim()
+      );
       if (result.success) {
-        navigate("/");
+        navigate("/"); // go to home after signup
       } else {
         setError(result.error.message || "Sign-up failed.");
       }
@@ -62,6 +66,12 @@ const SignUp = () => {
           placeholder="Email"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
+        />
+        <input
+          type="text"
+          placeholder="Username"
+          onChange={(e) => setUsername(e.target.value)}
+          value={username}
         />
         <input
           type="password"

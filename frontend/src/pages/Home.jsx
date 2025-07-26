@@ -1,20 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
+import { UserAuth } from "../context/AuthContext";
 import "../styles/home.css";
 
 export default function Home() {
   const navigate = useNavigate();
   const bgStaticRef = useRef(null);
+  const { session } = UserAuth();
 
   useEffect(() => {
     function handleScroll() {
       if (!bgStaticRef.current) return;
 
       const windowTop = window.scrollY || window.pageYOffset;
-      const elementTop = bgStaticRef.current.getBoundingClientRect().top + windowTop;
+      const elementTop =
+        bgStaticRef.current.getBoundingClientRect().top + windowTop;
       const leftPosition = windowTop - elementTop;
 
-      const bgMove = bgStaticRef.current.querySelector('.bg-move');
+      const bgMove = bgStaticRef.current.querySelector(".bg-move");
       if (bgMove) {
         bgMove.style.left = `${leftPosition}px`;
       }
@@ -24,10 +27,8 @@ export default function Home() {
     window.addEventListener("resize", handleScroll);
     window.addEventListener("scroll", handleScroll);
 
-    // Initial call so position is set on page load
-    handleScroll();
+    handleScroll(); // set on load
 
-    // Cleanup listeners on unmount
     return () => {
       window.removeEventListener("load", handleScroll);
       window.removeEventListener("resize", handleScroll);
@@ -38,6 +39,13 @@ export default function Home() {
   return (
     <>
       <div className="hero-container">
+        {/* ✅ Show username if available */}
+        {session?.user?.user_metadata?.username && (
+          <h2 style={{ marginBottom: "1rem" }}>
+            Welcome, <span>{session.user.user_metadata.username}</span>!
+          </h2>
+        )}
+
         <h1>
           Welcome to <span>NextNest</span>
         </h1>
@@ -51,8 +59,7 @@ export default function Home() {
       <div className="section bg-static" ref={bgStaticRef}>
         <div className="bg-move"></div>
       </div>
-      <div className="section">
-      </div>
+      <div className="section"></div>
     </>
   );
 }

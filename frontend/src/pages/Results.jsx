@@ -41,7 +41,7 @@ export default function Results() {
   }, [originCity, destinationCity, date, field]);
 
   const handleSave = async () => {
-    console.log("Session before save:", session);
+    // console.log("Session before save:", session);
 
     // block guests and non-signed-in users
     if (!session || guest) {
