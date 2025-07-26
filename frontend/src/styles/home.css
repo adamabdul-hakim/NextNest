@@ -6,15 +6,18 @@ body {
   background: #000000; /* Set the background of the entire page to black */
 }
 
-.home-container {
+.hero-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
   text-align: center;
-  background: #000000;
+  padding: 2rem;
+  background-color: #000000;
+  color: #ffffff;
 }
+
 .home-title {
   font-size: 3rem;
   margin-bottom: 1rem;
@@ -47,20 +50,21 @@ body {
 
 .section {
   position: relative;
-  max-width: 920px;
+  width: 100vw;      
   min-height: 75vh;
-  padding: 0;
   margin: 0;
+  padding: 0;
   background-color: #000000;
   color: #ffffff;
+  overflow: hidden; 
 }
 
 .section .bg-move {
   position: absolute;
-  top: 0;
+  top: 0px;
   bottom: 0;
   right: auto;
-  width: 90%;
+  width: 110%;
   height: auto;
   background-image: url(../images/plane.png);
   background-size: contain;
