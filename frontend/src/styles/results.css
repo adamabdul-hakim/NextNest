@@ -93,3 +93,14 @@
   background: #9ca3af;
   cursor: default;
 }
+
+.book-link {
+  display: inline-block;
+  margin-top: 0.8rem;
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+}
+.book-link:hover {
+  text-decoration: underline;
+}
