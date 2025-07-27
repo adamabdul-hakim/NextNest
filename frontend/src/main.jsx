@@ -22,10 +22,7 @@ createRoot(document.getElementById("root")).render(
         <Routes>
           <Route
             path="/"
-            element={
-              <PrivateRoute>
-                <Home />
-              </PrivateRoute>
+            element={<Home />
             }
           >
             <Route index={true} element={<Header />} />

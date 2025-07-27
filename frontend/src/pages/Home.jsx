@@ -2,11 +2,12 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { UserAuth } from "../context/AuthContext";
 import "../styles/home.css";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const navigate = useNavigate();
   const bgStaticRef = useRef(null);
-  const { session } = UserAuth();
+  const { session, signOut } = UserAuth(); // ← Grab signOut
 
   useEffect(() => {
     function handleScroll() {
@@ -38,8 +39,18 @@ export default function Home() {
 
   return (
     <>
+      <div style={{ display: "flex", justifyContent: "flex-end", padding: "1rem" }}>
+        {!session?.user ? (
+          <Link to="/signin">
+            <button style={{ padding: "0.5rem 1rem" }}>Sign In</button>
+          </Link>
+        ) : (
+          <button onClick={signOut} style={{ padding: "0.5rem 1rem" }}>
+            Sign Out
+          </button>
+        )}
+      </div>
       <div className="hero-container">
-        {/* ✅ Show username if available */}
         {session?.user?.user_metadata?.username && (
           <h2 style={{ marginBottom: "1rem" }}>
             Welcome, <span>{session.user.user_metadata.username}</span>!

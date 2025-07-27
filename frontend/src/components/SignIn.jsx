@@ -8,7 +8,7 @@ const SignIn = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { signInUser, signInAsGuest } = UserAuth(); // ✅ include signInAsGuest
+  const { signInUser, signInAsGuest } = UserAuth(); 
   const navigate = useNavigate();
 
   const handleSignIn = async (e) => {
@@ -26,7 +26,6 @@ const SignIn = () => {
     }
   };
 
-  // ✅ handle guest
   const handleGuest = () => {
     signInAsGuest();
     navigate("/dashboard");
@@ -59,7 +58,6 @@ const SignIn = () => {
         </button>
         {error && <p>{error}</p>}
 
-        {/* ✅ Continue as guest */}
         <button
           type="button"
           onClick={handleGuest}
