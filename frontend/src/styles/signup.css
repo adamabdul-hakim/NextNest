@@ -1,14 +1,16 @@
-/* signup.css */
 body, html {
-    height: 100%;
-    margin: 0;
-    background-color: #000000;
-    display: flex;
-    justify-content: center; /* horizontal centering */
-    align-items: center;    /* vertical centering */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
+  height: 100%;
+  margin: 0;
+  background-color: #000000;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.signup-wrapper {
+  height: 100vh;           /* full viewport height */
+  display: flex;
+  justify-content: center; /* horizontal center */
+  align-items: center;     /* vertical center */
+}
   .signup-container {
     width: 100%;
     max-width: 400px;

@@ -38,7 +38,7 @@ const SignUp = () => {
         username.trim()
       );
       if (result.success) {
-        navigate("/"); // go to home after signup
+        navigate("/");
       } else {
         setError(result.error.message || "Sign-up failed.");
       }
