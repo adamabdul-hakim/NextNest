@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
+import "../styles/signin.css";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -34,7 +35,7 @@ const SignIn = () => {
   return (
     <div>
       <form onSubmit={handleSignIn} className="signin-container">
-        <h1>Eco Hub</h1>
+        <h1>NextNest</h1>
         <h2>Sign in today!</h2>
         <p>
           Don't have an account?{" "}
