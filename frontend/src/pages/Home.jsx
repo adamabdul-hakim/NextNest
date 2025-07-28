@@ -6,8 +6,9 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
   const navigate = useNavigate();
+  const { session, signOut } = UserAuth();
+
   const bgStaticRef = useRef(null);
-  const { session, signOut } = UserAuth(); // ← Grab signOut
 
   useEffect(() => {
     function handleScroll() {
@@ -16,30 +17,24 @@ export default function Home() {
       const windowTop = window.scrollY || window.pageYOffset;
       const elementTop =
         bgStaticRef.current.getBoundingClientRect().top + windowTop;
+
       const leftPosition = windowTop - elementTop;
 
       const bgMove = bgStaticRef.current.querySelector(".bg-move");
       if (bgMove) {
-        bgMove.style.left = `${leftPosition}px`;
+        bgMove.style.left = `${leftPosition * 0.8}px`;
       }
     }
 
-    window.addEventListener("load", handleScroll);
-    window.addEventListener("resize", handleScroll);
     window.addEventListener("scroll", handleScroll);
-
-    handleScroll(); // set on load
-
-    return () => {
-      window.removeEventListener("load", handleScroll);
-      window.removeEventListener("resize", handleScroll);
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "flex-end", padding: "1rem" }}>
+      <div
+        style={{ display: "flex", justifyContent: "flex-end", padding: "1rem" }}
+      >
         {!session?.user ? (
           <Link to="/signin">
             <button style={{ padding: "0.5rem 1rem" }}>Sign In</button>
@@ -50,13 +45,14 @@ export default function Home() {
           </button>
         )}
       </div>
-      <div className="hero-container">
+
+      <div className="hero-container" ref={bgStaticRef}>
+        <div className="bg-move"></div>
         {session?.user?.user_metadata?.username && (
           <h2 style={{ marginBottom: "1rem" }}>
             Welcome, <span>{session.user.user_metadata.username}</span>!
           </h2>
         )}
-
         <h1>
           Welcome to <span>NextNest</span>
         </h1>
@@ -65,14 +61,28 @@ export default function Home() {
           and flights instantly.
         </p>
         <button className="start-button" onClick={() => navigate("/dashboard")}>
-        Get Started
+          Get Started
         </button>
       </div>
 
-      <div className="section bg-static" ref={bgStaticRef}>
-        <div className="bg-move"></div>
+      <div className="A">
+        <h2>Why choose us</h2>
+        <p>..........</p>
       </div>
-      <div className="section"></div>
+
+      <div className="B">
+        <h2>SOmething</h2>
+        <p>..........</p>
+      </div>
+
+      <div className="C">
+        <h2>Contact Us</h2>
+        <p>Have questions or feedback? We'd love to hear from you.</p>
+      </div>
+
+      <footer className="footer">
+        <p>&copy; 2025 NextNest. All rights reserved.</p>
+      </footer>
     </>
   );
 }
