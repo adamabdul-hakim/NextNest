@@ -70,3 +70,4 @@ def get_airline_name(iata_code: str) -> str:
     )
     response = model.generate_content(prompt)
     return response.text.strip()
+

@@ -4,6 +4,7 @@ import { fetchFlights, fetchJobs, fetchCitySummary } from "../services/api";
 import "../styles/results.css";
 import { BASE_URL } from "../config";
 import { UserAuth } from "../context/AuthContext";
+import { fetchTransportationSummary } from "../services/api";
 
 export default function Results() {
   const { session, guest } = UserAuth();
@@ -16,18 +17,22 @@ export default function Results() {
   const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
+  const [transportation, setTransportation] = useState(null)
 
   useEffect(() => {
     async function loadData() {
       try {
-        const [flightData, jobsData, summaryData] = await Promise.all([
+        const [flightData, jobsData, summaryData, transportationData] = await Promise.all([
           fetchFlights(originCity, destinationCity, date),
           fetchJobs(field, destinationCity),
           fetchCitySummary(destinationCity),
+          fetchTransportationSummary(destinationCity),  // 🆕 added line
         ]);
         setFlight(flightData);
         setJobs(jobsData);
         setSummary(summaryData);
+        setTransportation(transportationData);  // 🆕 set transportation
+        
       } catch (err) {
         console.error(err);
         alert("Something went wrong while loading results.");
@@ -124,6 +129,27 @@ export default function Results() {
             <strong>Average Temp:</strong> {summary.average_temp}°F
           </p>
           <p>{summary.summary}</p>
+        </section>
+      )}
+
+      {transportation && (
+        <section>
+          <h2>Transportation in {transportation.city}</h2>
+
+          <p>
+            <strong>Walk Score:</strong> {transportation.walk.score}/100<br />
+            <em>{transportation.walk.description}</em>
+          </p>
+
+          <p>
+            <strong>Bike Score:</strong> {transportation.bike.score}/100<br />
+            <em>{transportation.bike.description}</em>
+          </p>
+
+          <p>
+            <strong>Drive Score:</strong> {transportation.drive.score}/100<br />
+            <em>{transportation.drive.description}</em>
+          </p>
         </section>
       )}
 

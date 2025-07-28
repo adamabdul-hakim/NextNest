@@ -29,3 +29,12 @@ export async function fetchCitySummary(city) {
   if (!res.ok) throw new Error("City Summary API failed");
   return await res.json();
 }
+
+
+export async function fetchTransportationSummary(city) {
+  const res = await fetch(
+    `${BASE_URL}/api/transportation?city=${encodeURIComponent(city)}`
+  );
+  if (!res.ok) throw new Error("City Summary API failed");
+  return await res.json();
+}

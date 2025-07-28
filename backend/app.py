@@ -5,7 +5,7 @@ from routes.flights_api import flights_bp
 from routes.jobs_api import jobs_bp
 from routes.city_summary_api import city_bp
 from routes.history_api import history_bp
-from routes.autocomplete import autocomplete_bp
+from routes.openai import autocomplete_bp, transportation_bp
 
 
 load_dotenv()
@@ -18,7 +18,7 @@ app.register_blueprint(jobs_bp)
 app.register_blueprint(city_bp)
 app.register_blueprint(history_bp)
 app.register_blueprint(autocomplete_bp)
-
+app.register_blueprint(transportation_bp)
 
 
 
