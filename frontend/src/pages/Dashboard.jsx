@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
 import { BASE_URL } from "../config";
 import "../styles/dashboard.css";
@@ -7,34 +6,6 @@ import "../styles/dashboard.css";
 export default function Dashboard() {
   const { session, guest, signOut } = UserAuth();
   const navigate = useNavigate();
-  const [recentCities, setRecentCities] = useState([]);
-
-  useEffect(() => {
-    const loadRecent = async () => {
-      if (guest || !session) return; // skip for guest
-      try {
-        const res = await fetch(`${BASE_URL}/api/history`, {
-          headers: {
-            Authorization: `Bearer ${session.access_token}`,
-          },
-        });
-        const data = await res.json();
-
-        // Extract unique destination cities in order
-        const unique = [];
-        for (const item of data) {
-          if (!unique.includes(item.destination_city)) {
-            unique.push(item.destination_city);
-          }
-          if (unique.length >= 5) break; // show up to 5
-        }
-        setRecentCities(unique);
-      } catch (err) {
-        console.error("Error loading recent cities:", err);
-      }
-    };
-    loadRecent();
-  }, [session, guest]);
 
   const handleSignOut = () => {
     signOut();
@@ -94,19 +65,6 @@ export default function Dashboard() {
             <li>Sign in for full features!</li>
           </ul>
         </div>
-
-        {!guest && recentCities.length > 0 && (
-          <div className="recent-panel">
-            <h3>Recently Viewed Cities</h3>
-            <div className="recent-tags">
-              {recentCities.map((city) => (
-                <span key={city} className="tag">
-                  {city}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
