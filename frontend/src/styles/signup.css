@@ -6,10 +6,10 @@ body, html {
 }
 
 .signup-wrapper {
-  height: 100vh;           /* full viewport height */
+  height: 100vh;
   display: flex;
-  justify-content: center; /* horizontal center */
-  align-items: center;     /* vertical center */
+  justify-content: center;
+  align-items: center;
 }
   .signup-container {
     width: 100%;

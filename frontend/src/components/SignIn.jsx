@@ -33,41 +33,44 @@ const SignIn = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSignIn} className="signin-container">
-        <h1>NextNest</h1>
-        <h2>Sign in today!</h2>
-        <p>
-          Don't have an account?{" "}
-          <Link to={"/signup"} className="signup-link">
-            Sign up!
-          </Link>
-        </p>
-
-        <input
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          type="email"
-        />
-        <input
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          type="password"
-        />
-        <button type="submit" disabled={loading}>
-          Sign in
-        </button>
-        {error && <p>{error}</p>}
-
-        <button
-          type="button"
-          onClick={handleGuest}
-          style={{ marginTop: "1rem" }}
-        >
-          Continue as Guest
-        </button>
-      </form>
-    </div>
+      <div className="signin-page">
+        <form onSubmit={handleSignIn} className="signin-container">
+          <h1>NextNest</h1>
+          <h2>Sign in today!</h2>
+          <p>
+            Don't have an account?{" "}
+            <Link to={"/signup"} className="signup-link">
+              Sign up!
+            </Link>
+          </p>
+    
+          <input
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            type="email"
+          />
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            type="password"
+          />
+    
+          <button type="submit" disabled={loading}>
+            Sign in
+          </button>
+    
+          {error && <p>{error}</p>}
+    
+          <button
+            type="button"
+            onClick={handleGuest}
+            style={{ marginTop: "1rem" }}
+          >
+            Continue as Guest
+          </button>
+        </form>
+      </div>
+    
   );
 };
 
