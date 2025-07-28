@@ -15,6 +15,7 @@ import { AuthContextProvider } from "./context/AuthContext.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import Dashboard from "./pages/Dashboard";
 
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthContextProvider>
