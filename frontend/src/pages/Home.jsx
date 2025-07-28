@@ -64,7 +64,9 @@ export default function Home() {
           Explore what life would be like in another city — check weather, jobs,
           and flights instantly.
         </p>
-        <button onClick={() => navigate("/dashboard")}>Get Started</button>
+        <button className="start-button" onClick={() => navigate("/dashboard")}>
+        Get Started
+        </button>
       </div>
 
       <div className="section bg-static" ref={bgStaticRef}>
