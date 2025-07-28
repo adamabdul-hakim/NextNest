@@ -1,83 +1,66 @@
 import os
+import json
 from dotenv import load_dotenv
-from google import genai
-from google.genai import types
+from google.generativeai import GenerativeModel, configure
 
 load_dotenv()
 
-my_api_key = os.getenv("GEMINI_API_KEY")
-if not my_api_key:
-    raise ValueError("Missing YOUTUBE_API_KEY in .env")
+api_key = os.getenv("GEMINI_API_KEY")
+if not api_key:
+    raise ValueError("Missing GEMINI_API_KEY in .env")
 
-# Create the client
-client = genai.Client(api_key=my_api_key)
+# Configure the Gemini SDK
+configure(api_key=api_key)
+
+# Use a model instance (recommended: "gemini-1.5-flash")
+model = GenerativeModel("gemini-1.5-flash")
 
 
 def get_airport_code(city_name: str) -> str:
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        config=types.GenerateContentConfig(
-            system_instruction=(
-                "You are an assistant that returns only valid IATA airport codes. "
-                "Given a city name, return ONLY the closest major airport IATA code. "
-                "Return just the 3-letter code, nothing else."
-            )
-        ),
-        contents=city_name,
+    prompt = (
+        "You are an assistant that returns only valid IATA airport codes. "
+        f"Given the city '{city_name}', return ONLY the closest major airport IATA code. "
+        "Return just the 3-letter code, nothing else."
     )
-
+    response = model.generate_content(prompt)
     return response.text.strip()
 
+
 def get_city_summary(city_name: str) -> dict:
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        config=types.GenerateContentConfig(
-            system_instruction=(
-                "You are an assistant that returns information in JSON. "
-                "Given a city name, provide: "
-                "1. The approximate average yearly temperature in Fahrenheit (integer or rounded). "
-                "2. A short friendly sentence describing the type of people who would enjoy living or visiting there, "
-                "based on climate and general lifestyle. "
-                "Return the result strictly in JSON format with keys 'average_temp' and 'summary'. "
-                "Do not include any Markdown, code blocks, or explanations—ONLY JSON."
-            )
-        ),
-        contents=city_name,
+    prompt = (
+        "You are an assistant that returns information in JSON. "
+        f"Given the city '{city_name}', provide:\n"
+        "1. The approximate average yearly temperature in Fahrenheit (integer or rounded).\n"
+        "2. A short friendly sentence describing the type of people who would enjoy living or visiting there, "
+        "based on climate and general lifestyle.\n"
+        "Return the result strictly in JSON format with keys 'average_temp' and 'summary'. "
+        "Do not include any Markdown, code blocks, or explanations—ONLY JSON."
     )
 
+    response = model.generate_content(prompt)
     raw_text = response.text.strip()
 
-
-    # Remove markdown code fences if present
+    # Remove markdown fences if needed
     if raw_text.startswith("```"):
-        raw_text = raw_text.strip("`")  # remove backticks
-        # split by newline and find the JSON part
+        raw_text = raw_text.strip("`")
         lines = raw_text.splitlines()
-        json_part = "\n".join(line for line in lines if not line.strip().startswith("```") and not line.strip().lower().startswith("json"))
+        json_part = "\n".join(
+            line for line in lines if not line.strip().startswith("```") and not line.lower().startswith("json")
+        )
     else:
         json_part = raw_text
 
-    import json
     try:
-        data = json.loads(json_part)
+        return json.loads(json_part)
     except json.JSONDecodeError:
-        # fallback: return as summary
-        data = {"average_temp": None, "summary": raw_text}
+        return {"average_temp": None, "summary": raw_text}
 
-    return data
 
 def get_airline_name(iata_code: str) -> str:
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        config=types.GenerateContentConfig(
-            system_instruction=(
-                "You are an assistant that returns the full name of an airline given its IATA code. "
-                "Respond only with the airline name, with no extra text. "
-                "If the code is unknown or invalid, say 'Unknown airline'."
-            )
-        ),
-        contents=iata_code,
+    prompt = (
+        "You are an assistant that returns the full name of an airline given its IATA code. "
+        f"The code is: {iata_code}. Respond only with the airline name, with no extra text. "
+        "If the code is unknown or invalid, say 'Unknown airline'."
     )
-
-    name = response.text.strip()
-    return name
+    response = model.generate_content(prompt)
+    return response.text.strip()

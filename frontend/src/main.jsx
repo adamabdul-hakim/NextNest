@@ -14,6 +14,7 @@ import SignUp from "./components/Signup.jsx";
 import { AuthContextProvider } from "./context/AuthContext.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthContextProvider>
