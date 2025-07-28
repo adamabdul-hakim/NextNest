@@ -7,7 +7,7 @@ from openai import OpenAI
 load_dotenv()
 
 # Set up OpenAI client
-client = OpenAI(api_key="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")
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # Create Flask Blueprint
 autocomplete_bp = Blueprint("autocomplete", __name__)
@@ -22,9 +22,9 @@ def suggest():
 
     # Construct GPT prompt based on the field
     if field in ["originCity", "destinationCity"]:
-        prompt = f"Suggest 5 U.S. cities that start with '{user_input}'"
+        prompt = f"Suggest 5 U.S. cities that start with '{user_input}'. Give only the suggestions. No other information please."
     elif field == "role":
-        prompt = f"Suggest 5 tech job titles that start with '{user_input}'"
+        prompt = f"Suggest 5 tech job titles that start with '{user_input}'. Give only the suggestions. No other information please."
     else:
         return jsonify({"suggestions": []})
 
