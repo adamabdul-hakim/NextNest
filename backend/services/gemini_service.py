@@ -54,20 +54,3 @@ def get_city_summary(city_name: str) -> dict:
         return json.loads(json_part)
     except json.JSONDecodeError:
         return {"average_temp": None, "summary": raw_text}
-
-
-def get_airline_name(iata_code: str) -> str:
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        config=types.GenerateContentConfig(
-            system_instruction=(
-                "You are an assistant that returns the full name of an airline given its IATA code. "
-                "Respond only with the airline name, with no extra text. "
-                "If the code is unknown or invalid, say 'Unknown airline'."
-            )
-        ),
-        contents=iata_code,
-    )
-    response = model.generate_content(prompt)
-    return response.text.strip()
-
