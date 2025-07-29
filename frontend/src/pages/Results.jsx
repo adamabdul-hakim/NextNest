@@ -1,38 +1,39 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { fetchFlights, fetchJobs, fetchCitySummary } from "../services/api";
+import { fetchFlights, fetchJobs, fetchCitySummary, fetchTransportationSummary, fetchSalaryComparison  } from "../services/api";
 import "../styles/results.css";
 import { BASE_URL } from "../config";
 import { UserAuth } from "../context/AuthContext";
-import { fetchTransportationSummary } from "../services/api";
 
 export default function Results() {
   const { session, guest } = UserAuth();
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { originCity, destinationCity, date, field } = state || {};
+  const { originCity, destinationCity, current_role, date, field } = state || {};
 
   const [flight, setFlight] = useState(null);
   const [jobs, setJobs] = useState([]);
   const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
-  const [transportation, setTransportation] = useState(null)
+  const [transportation, setTransportation] = useState(null);
+  const [jobComparison, setJobComparison] = useState(null);
 
   useEffect(() => {
     async function loadData() {
       try {
-        const [flightData, jobsData, summaryData, transportationData] = await Promise.all([
+        const [flightData, jobsData, summaryData, transportationData, jobComparisonData] = await Promise.all([
           fetchFlights(originCity, destinationCity, date),
           fetchJobs(field, destinationCity),
           fetchCitySummary(destinationCity),
           fetchTransportationSummary(destinationCity),  // 🆕 added line
+          fetchSalaryComparison(originCity, destinationCity, current_role, field),
         ]);
         setFlight(flightData);
         setJobs(jobsData);
         setSummary(summaryData);
         setTransportation(transportationData);  // 🆕 set transportation
-        
+        setJobComparison(jobComparisonData)
       } catch (err) {
         console.error(err);
         alert("Something went wrong while loading results.");
@@ -43,7 +44,7 @@ export default function Results() {
     if (originCity && destinationCity && date) {
       loadData();
     }
-  }, [originCity, destinationCity, date, field]);
+  }, [originCity, destinationCity, date, field, current_role]);
 
   const handleSave = async () => {
     if (!session || guest) {
@@ -62,6 +63,7 @@ export default function Results() {
           origin_city: originCity,
           destination_city: destinationCity,
           role: field,
+          current_role: current_role,
           travel_date: date,
         }),
       });
@@ -170,6 +172,31 @@ export default function Results() {
           </ul>
         </section>
       )}
+
+      {jobComparison && (
+        <section>
+          <h2>Salary Comparison</h2>
+
+          {!jobComparison.match ? (
+            <p>{jobComparison.message}</p>
+          ) : (
+            <>
+              <p>
+                <strong>{jobComparison.origin}:</strong> {jobComparison.origin_salary.amount} –{" "}
+                <em>{jobComparison.origin_salary.description}</em>
+              </p>
+              <p>
+                <strong>{jobComparison.destination}:</strong> {jobComparison.destination_salary.amount} –{" "}
+                <em>{jobComparison.destination_salary.description}</em>
+              </p>
+              <p>
+                <strong>Summary:</strong> {jobComparison.summary}
+              </p>
+            </>
+          )}
+        </section>
+      )}
+
 
       <div className="results-actions">
         <button onClick={handleSave} disabled={saved}>

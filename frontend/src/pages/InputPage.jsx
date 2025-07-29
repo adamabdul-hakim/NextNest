@@ -7,6 +7,7 @@ export default function InputPage() {
   const [formData, setFormData] = useState({
     originCity: "",
     destinationCity: "",
+    current_role: "",
     role: "",
     date: "",
   });
@@ -14,6 +15,7 @@ export default function InputPage() {
   const [suggestions, setSuggestions] = useState({
     originCity: [],
     destinationCity: [],
+    current_role: [],
     role: []
   });
   
@@ -21,7 +23,8 @@ export default function InputPage() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   
-    if (["originCity", "destinationCity", "role"].includes(name) && value.length >= 2) {
+    if (["originCity", "destinationCity", "role", "current_role"].includes(name) && value.length >= 2)
+      {
       const url = `/api/suggest?field=${encodeURIComponent(name)}&input=${encodeURIComponent(value)}`;
       console.log("🔍 Fetching:", url);
   
@@ -49,6 +52,7 @@ export default function InputPage() {
       state: {
         originCity: formData.originCity,
         destinationCity: formData.destinationCity,
+        current_role: formData.current_role,
         date: formData.date,
         field: formData.role,
       },
@@ -78,6 +82,8 @@ export default function InputPage() {
           </datalist>
         </div>
 
+        
+
         <div>
           <label>Destination City</label>
           <input
@@ -94,6 +100,25 @@ export default function InputPage() {
               <option key={i} value={s} />
             ))}
           </datalist>
+        </div>
+        
+        <div>
+          <label>Current Role</label>
+          <input
+            type="text"
+            name="current_role"
+            value={formData.current_role}
+            onChange={handleChange}
+            placeholder="e.g. Software Engineer"
+            list="current_role_suggestions"
+            required
+          />
+          <datalist id="current_role_suggestions">
+            {suggestions.current_role.map((s, i) => (
+              <option key={i} value={s} />
+            ))}
+          </datalist>
+          
         </div>
 
         <div>

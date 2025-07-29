@@ -38,3 +38,11 @@ export async function fetchTransportationSummary(city) {
   if (!res.ok) throw new Error("City Summary API failed");
   return await res.json();
 }
+
+export async function fetchSalaryComparison(originCity, destinationCity, current_role, role) {
+  const res = await fetch(
+    `${BASE_URL}/api/salary-comparison?originCity=${encodeURIComponent(originCity)}&destinationCity=${encodeURIComponent(destinationCity)}&current_role=${encodeURIComponent(current_role)}&role=${encodeURIComponent(role)}`
+  );
+  if (!res.ok) throw new Error("Salary Comparison API failed");
+  return await res.json();
+}
