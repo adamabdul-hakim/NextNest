@@ -30,6 +30,15 @@ jobs:
         working-directory: backend
         env:
           PYTHONPATH: backend
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          AMADEUS_API_KEY: ${{ secrets.AMADEUS_API_KEY }}
+          AMADEUS_API_SECRET: ${{ secrets.AMADEUS_API_SECRET }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          SUPABASE_JWT_SECRET: ${{ secrets.SUPABASE_JWT_SECRET }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           source venv/bin/activate
           python -m unittest discover -s tests
