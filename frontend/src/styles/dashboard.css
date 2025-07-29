@@ -1,13 +1,16 @@
 .dashboard-container {
   padding: 2rem;
   font-family: system-ui, sans-serif;
+  background-color: #f9fafb; /* light neutral background */
+  min-height: 100vh;
 }
 
 .dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: white;
+  color: #1e293b; /* dark slate */
+  margin-bottom: 1rem;
 }
 
 .dashboard-header-right {
@@ -18,21 +21,27 @@
 
 .welcome-text {
   font-weight: 500;
+  color: #334155; /* slate */
 }
 
 .signout-btn {
-  background: #ef4444;
+  background: #dc2626; /* red-600 */
   color: white;
   border: none;
   padding: 0.6rem 1rem;
   border-radius: 6px;
   cursor: pointer;
+  transition: background 0.2s;
+}
+
+.signout-btn:hover {
+  background: #b91c1c; /* red-700 */
 }
 
 .dashboard-tagline {
   margin: 2rem 0;
   font-size: 1.2rem;
-  color: white;
+  color: #475569; /* cool slate */
 }
 
 .dashboard-grid {
@@ -43,26 +52,27 @@
 }
 
 .dashboard-card {
-  background: #f9f9f9;
+  background: white;
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s;
 }
 
 .dashboard-card:hover {
   transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .dashboard-card.primary {
-  background: #302e61;
+  background: #3b82f6; /* blue-500 */
   color: white;
 }
 
 .dashboard-card.disabled {
-  background: #e5e7eb;
-  color: #9ca3af;
+  background: #f1f5f9; /* gray-100 */
+  color: #94a3b8; /* gray-400 */
   cursor: not-allowed;
 }
 
@@ -72,10 +82,27 @@
   gap: 2rem;
 }
 
-.tips-panel {
-  background: #f3f4f6;
+.tips-panel,
+.recent-panel {
+  background: #f8fafc; /* subtle gray */
   padding: 1.5rem;
   border-radius: 12px;
   flex: 1;
   min-width: 250px;
+  color: #334155;
+}
+
+.recent-tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.tag {
+  background: #dbeafe; /* blue-100 */
+  padding: 0.3rem 0.7rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: #1e3a8a; /* blue-900 */
 }
