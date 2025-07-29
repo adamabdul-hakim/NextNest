@@ -51,10 +51,14 @@
   font-size: 1rem;
   border: 1px solid #d1d5db;
   border-radius: 8px;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.input-form input:focus {
+.input-form input:hover {
+  border-color: #a5b4fc;
+}
+
+.input-form input:focus-visible {
   border-color: #4f46e5;
   outline: none;
   box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
@@ -70,11 +74,15 @@
   background: #1e3a8a;
   color: white;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .input-form button:hover {
   background: #1a2441;
+}
+
+.input-form button:active {
+  transform: scale(0.98);
 }
 
 @media (max-width: 480px) {
