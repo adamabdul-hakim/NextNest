@@ -20,3 +20,4 @@ class TestAdzunaService(unittest.TestCase):
         mock_get.return_value = mock_response
         jobs = get_jobs("developer", "Austin")
         self.assertEqual(jobs[0]["title"], "Backend Developer")
+
