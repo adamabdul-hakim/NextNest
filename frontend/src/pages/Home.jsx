@@ -33,6 +33,7 @@ export default function Home() {
   return (
     <>
       <div
+        className="navbar"
         style={{ display: "flex", justifyContent: "flex-end", padding: "1rem" }}
       >
         {!session?.user ? (
@@ -65,19 +66,27 @@ export default function Home() {
         </button>
       </div>
 
-      <div className="A">
-        <h2>Why choose us</h2>
-        <p>..........</p>
-      </div>
+      <div className="flippable-cards-container">
+        <div className="flip-card">
+          <div className="flip-card-inner">
+            <div className="flip-card-front">Why choose us?</div>
+            <div className="flip-card-back">Back 1</div>
+          </div>
+        </div>
 
-      <div className="B">
-        <h2>SOmething</h2>
-        <p>..........</p>
-      </div>
+        <div className="flip-card">
+          <div className="flip-card-inner">
+            <div className="flip-card-front">How do we get our data?</div>
+            <div className="flip-card-back">Back 2</div>
+          </div>
+        </div>
 
-      <div className="C">
-        <h2>Contact Us</h2>
-        <p>Have questions or feedback? We'd love to hear from you.</p>
+        <div className="flip-card">
+          <div className="flip-card-inner">
+            <div className="flip-card-front">Got any feedbacks?</div>
+            <div className="flip-card-back">Back 3</div>
+          </div>
+        </div>
       </div>
 
       <footer className="footer">
