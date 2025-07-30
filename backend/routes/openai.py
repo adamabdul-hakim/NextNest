@@ -19,20 +19,19 @@ def suggest():
     field = request.args.get("field")
     user_input = request.args.get("input", "").strip()
 
+    print("👉 /api/suggest hit:", {"field": field, "input": user_input})
+
     if not user_input or not field:
         return jsonify({"suggestions": []})
 
-    # Construct GPT prompt based on the field
     if field in ["originCity", "destinationCity"]:
-        prompt = f"Suggest 5 U.S. cities that start with '{user_input}'. Give only the suggestions. No other information please."
+        prompt = f"Suggest 5 U.S. cities that start with '{user_input}'. Only list the cities."
     elif field in ["role", "current_role"]:
-        prompt = f"Suggest 5 tech job titles that start with '{user_input}'. Give only the suggestions. No other information please."
+        prompt = f"Suggest 5 tech job titles that start with '{user_input}'. Only list the titles."
     else:
         return jsonify({"suggestions": []})
 
-
     try:
-        # Call OpenAI
         response = client.chat.completions.create(
             model="gpt-4o",
             messages=[{"role": "user", "content": prompt}],
@@ -40,19 +39,20 @@ def suggest():
             temperature=0.6,
         )
 
-        # Parse and clean suggestions
         output = response.choices[0].message.content
+        print("✅ GPT raw output:", output)
+
         suggestions = [
             line.strip().lstrip("1234567890. ").strip()
             for line in output.split("\n") if line.strip()
         ]
 
         return jsonify({"suggestions": suggestions})
-    
+
     except Exception as e:
-        print("OpenAI API error:", e)
-        return jsonify({"suggestions": []})
-    
+        print("❌ OpenAI API error:", e)
+        return jsonify({"suggestions": [], "error": str(e)}), 500
+ 
 @transportation_bp.route("/api/transportation", methods=["GET"])
 def transportation():
     user_input = request.args.get("city", "").strip()
