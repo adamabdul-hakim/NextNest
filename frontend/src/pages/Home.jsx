@@ -51,14 +51,18 @@ export default function Home() {
 
       <div className="hero-container" ref={bgStaticRef}>
         <div className="bg-move"></div>
-        <h2 style={{ marginBottom: "1rem" }}>
-          Welcome, <span>{username}</span>!
+        <h2 className="fade-in" style={{ marginBottom: "1rem" }}>
+          Welcome to NextNest, <span>{username}</span>!
         </h2>
-        <p>
+        <p className="fade-in fade-in-delay">
           Welcome to <strong>NextNest</strong>: Explore what life would be like
           in another city — check weather, jobs, and flights instantly.
         </p>
-        <button className="start-button" onClick={() => navigate("/dashboard")}>
+        <button
+          className="start-button fade-in fade-in-delay"
+          onClick={() => navigate("/dashboard")}
+          style={{ animationDelay: "0.6s" }}
+        >
           Get Started
         </button>
       </div>
