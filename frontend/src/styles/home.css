@@ -40,6 +40,10 @@ body {
   margin-bottom: 1rem;
 }
 
+.fade-in {
+  font-size: 1.4rem;
+}
+
 .highlight {
   color: #000000;
 }
