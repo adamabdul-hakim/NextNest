@@ -123,7 +123,7 @@ Runs at: `http://localhost:5173`
 
 ## 🗺️ System Architecture
 
-![System Architecture](frontend\src\images\system_architecture.png)
+![System Architecture](frontend/src/images/system_architecture.png)
 
 ## ✅ Roadmap
 
