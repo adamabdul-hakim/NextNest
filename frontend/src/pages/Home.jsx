@@ -71,21 +71,34 @@ export default function Home() {
         <div className="flip-card">
           <div className="flip-card-inner">
             <div className="flip-card-front">Why choose us?</div>
-            <div className="flip-card-back">Back 1</div>
+            <div className="flip-card-back">
+              NextNest is designed to be comprehensive and easy to use.
+              <br />
+              <br></br>
+              We provide users with a good idea about affordability
+              <br /> and job availability in a desired city.
+            </div>
           </div>
         </div>
 
         <div className="flip-card">
           <div className="flip-card-inner">
             <div className="flip-card-front">How do we get our data?</div>
-            <div className="flip-card-back">Back 2</div>
+            <div className="flip-card-back">
+              We utilize an assortment of API calls to provide you with the
+              information at ease. <br></br>
+              <br></br> We use Adzuna, Amadeus, Gemini, and OpenAI API.
+            </div>
           </div>
         </div>
 
         <div className="flip-card">
           <div className="flip-card-inner">
             <div className="flip-card-front">Got any feedbacks?</div>
-            <div className="flip-card-back">Back 3</div>
+            <div className="flip-card-back">
+              We LOVE feedback! <br></br> <br></br> Feel free to contact us via
+              email through our github profiles!
+            </div>
           </div>
         </div>
       </div>
