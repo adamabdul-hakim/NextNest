@@ -55,8 +55,8 @@ export default function Home() {
           Welcome to NextNest, <span>{username}</span>!
         </h2>
         <p className="fade-in fade-in-delay">
-          Welcome to <strong>NextNest</strong>: Explore what life would be like
-          in another city — check weather, jobs, and flights instantly.
+          Explore what life would be like in another city — check weather, jobs,
+          and flights instantly.
         </p>
         <button
           className="start-button fade-in fade-in-delay"
