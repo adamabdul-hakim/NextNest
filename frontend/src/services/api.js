@@ -57,4 +57,4 @@ export async function fetchSalaryComparison(
   return await res.json();
 }
 
-console.log("BASE_URL: ", BASE_URL);
+// console.log("BASE_URL: ", BASE_URL);

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
-import { BASE_URL } from "../config"; // ✅ import the correct base URL
+import { BASE_URL } from "../config";
 import "../styles/inputpage.css";
 
 export default function InputPage() {
@@ -33,7 +33,7 @@ export default function InputPage() {
       const url = `${BASE_URL}/api/suggest?field=${encodeURIComponent(
         name
       )}&input=${encodeURIComponent(value)}`;
-      console.log("👉 Fetching suggestions from:", url); // ✅ debug line
+      // console.log("👉 Fetching suggestions from:", url); // ✅ debug line
 
       try {
         const res = await fetch(url);
