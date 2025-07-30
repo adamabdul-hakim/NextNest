@@ -121,6 +121,10 @@ Runs at: `http://localhost:5173`
 
 ---
 
+## 🗺️ System Architecture
+
+![System Architecture](frontend\src\images\system_architecture.png)
+
 ## ✅ Roadmap
 
 - [ ] Add cost of living API
