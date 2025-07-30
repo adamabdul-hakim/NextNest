@@ -53,7 +53,7 @@ const SignUp = () => {
   return (
     <div className="signup-wrapper">
       <form onSubmit={handleSignUp} className="signup-container">
-        <h1>Eco Hub</h1>
+        <h1>NextNest</h1>
         <h2>Sign up today!</h2>
         <p>
           Already have an account?{" "}
