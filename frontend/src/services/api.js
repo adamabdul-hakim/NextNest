@@ -30,7 +30,6 @@ export async function fetchCitySummary(city) {
   return await res.json();
 }
 
-
 export async function fetchTransportationSummary(city) {
   const res = await fetch(
     `${BASE_URL}/api/transportation?city=${encodeURIComponent(city)}`
@@ -39,10 +38,23 @@ export async function fetchTransportationSummary(city) {
   return await res.json();
 }
 
-export async function fetchSalaryComparison(originCity, destinationCity, current_role, role) {
+export async function fetchSalaryComparison(
+  originCity,
+  destinationCity,
+  current_role,
+  role
+) {
   const res = await fetch(
-    `${BASE_URL}/api/salary-comparison?originCity=${encodeURIComponent(originCity)}&destinationCity=${encodeURIComponent(destinationCity)}&current_role=${encodeURIComponent(current_role)}&role=${encodeURIComponent(role)}`
+    `${BASE_URL}/api/salary-comparison?originCity=${encodeURIComponent(
+      originCity
+    )}&destinationCity=${encodeURIComponent(
+      destinationCity
+    )}&current_role=${encodeURIComponent(
+      current_role
+    )}&role=${encodeURIComponent(role)}`
   );
   if (!res.ok) throw new Error("Salary Comparison API failed");
   return await res.json();
 }
+
+console.log("BASE_URL: ", BASE_URL);
