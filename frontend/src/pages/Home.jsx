@@ -30,6 +30,8 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const username = session?.user?.user_metadata?.username || "User";
+
   return (
     <>
       <div
@@ -48,17 +50,12 @@ export default function Home() {
 
       <div className="hero-container" ref={bgStaticRef}>
         <div className="bg-move"></div>
-        {session?.user?.user_metadata?.username && (
-          <h2 style={{ marginBottom: "1rem" }}>
-            Welcome, <span>{session.user.user_metadata.username}</span>!
-          </h2>
-        )}
-        <h1>
-          Welcome to <span>NextNest</span>
-        </h1>
+        <h2 style={{ marginBottom: "1rem" }}>
+          Welcome, <span>{username}</span>!
+        </h2>
         <p>
-          Explore what life would be like in another city — check weather, jobs,
-          and flights instantly.
+          Welcome to <strong>NextNest</strong>: Explore what life would be like
+          in another city — check weather, jobs, and flights instantly.
         </p>
         <button className="start-button" onClick={() => navigate("/dashboard")}>
           Get Started
