@@ -65,9 +65,7 @@ export default function InputPage() {
 
   return (
     <div className="input-page">
-      <div className="input-header">
-        <Outlet />
-      </div>
+      <div className="input-header"></div>
       <div className="input-content">
         <form onSubmit={handleSubmit} className="input-form">
           <h1>Tell us about your move</h1>
