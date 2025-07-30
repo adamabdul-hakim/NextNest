@@ -52,7 +52,7 @@ export default function Home() {
       <div className="hero-container" ref={bgStaticRef}>
         <div className="bg-move"></div>
         <h2 className="fade-in" style={{ marginBottom: "1rem" }}>
-          Welcome, <span>{username}</span>!
+          Welcome to NextNest, <span>{username}</span>!
         </h2>
         <p className="fade-in fade-in-delay">
           Welcome to <strong>NextNest</strong>: Explore what life would be like
